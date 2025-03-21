@@ -1,0 +1,110 @@
+@import url('https://fonts.googleapis.com/css2?family=Edu+TAS+Beginner&family=Montserrat&family=Noto+Sans:wght@200&family=Nunito+Sans:opsz,wght@6..12,200&family=Poppins:wght@300;400&family=Roboto:wght@100&family=Signika+Negative:wght@300&display=swap');
+
+* {
+	font-family: 'Poppins', sans-serif;
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	color: var(--secondary);
+}
+
+body {
+	min-height: 100dvh;
+	display: flex;
+	flex-direction: column;
+}
+
+:root {
+	--primary: #fff;
+	--secondary: #333;
+	--card: #ddd;
+	--card-1: #cdcece;
+	--card-2: #c2c4c4;
+	--card-3: #a8a9a9;
+}
+
+img {
+	width: 1.5rem;
+	height: 1.5rem;
+}
+
+a {
+	text-decoration: none;
+}
+
+/* SIDEBAR */
+.sidebar {
+	padding: 1rem;
+	background-color: var(--card);
+	height: 85dvh;
+}
+
+.sidebar ul {
+	padding: 0;
+}
+
+.sidebar ul li {
+	list-style: none;
+	margin-bottom: 5px;
+}
+
+.sidebar-link {
+	display: flex;
+	align-items: center;
+	padding: 5px;
+	padding-right: 5rem;
+	border-radius: 5px;
+}
+
+.sidebar-link:hover {
+	background-color: var(--card-1);
+}
+
+li p {
+	height: fit-content;
+	margin: 0;
+}
+
+/* HEADER */
+.header {
+	background-color: var(--secondary);
+	color: var(--primary);
+	height: 10dvh;
+	display: flex;
+	align-items: center;
+	padding-left: 1rem;
+}
+
+.header h1 {
+	margin: 0;
+}
+
+/* FOOTER */
+.footer {
+	background-color: var(--secondary);
+	color: var(--primary);
+	height: 5dvh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.footer p {
+	color: var(--primary);
+	margin: 0;
+}
+
+/* MAIN */
+.main-content-container {
+	display: flex;
+	flex-direction: row;
+	justify-content: start;
+	align-items: start;
+	flex-grow: 1;
+}
+
+.main-content {
+	padding: 1rem;
+	display: flex;
+	flex-direction: column;
+}
