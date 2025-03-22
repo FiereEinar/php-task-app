@@ -1,20 +1,27 @@
-<!DOCTYPE html>
 <?php
-	include './database.php';
-  if (isset($_POST["submit"])) {
-		$name = $_POST["name"];
-    $description = $_POST["description"];
-    $due_date = $_POST["due_date"];
-		
-    $query = "INSERT INTO tasks (name, description, due_date) VALUES ('$name', '$description', '$due_date')";
-    $result = mysqli_query($conn, $query);
-    // if ($result) {
-    //   echo "Task added successfully";
-    // } else {
-    //   echo "Failed to add task";
-    // }
-  }
+require_once './database.php';
+
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+	$name = trim($_POST["name"]);
+	$description = trim($_POST["description"]);
+	$due_date = $_POST["due_date"];
+
+	if (empty($name) || empty($description) || empty($due_date)) {
+		$error = "Failed to add task";
+	} else {
+		$query = "INSERT INTO tasks (name, description, due_date) VALUES (?, ?, ?)";
+		$stmt = mysqli_prepare($conn, $query);
+		mysqli_stmt_bind_param($stmt, "sss", $name, $description, $due_date);
+		$result = mysqli_stmt_execute($stmt);
+		mysqli_stmt_close($stmt);
+
+		if (!$result) {
+			$error = "Failed to add task";
+		}
+	}
+}
 ?>
+<!DOCTYPE html>
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
@@ -27,9 +34,9 @@
 		<link rel="stylesheet" href="./styles/styles.css">
 	</head>
 	<body>
-		<?php include './inc/header.php'; ?>
+		<?php require_once './inc/header.php'; ?>
 		<main class="main-content-container">
-			<?php include './inc/sidebar.php'; ?>
+			<?php require_once './inc/sidebar.php'; ?>
 			<div class="main-content">
 				<h2 class="">Add Task</h2>
 
@@ -64,6 +71,10 @@
 						/>
 					</div>
 
+					<?php if (isset($error)): ?>
+						<div class="alert alert-danger"><?= $error ?></div>
+					<?php endif; ?>
+					
 					<div>
 						<button name="submit" type="submit" class="btn btn-primary">Submit</button>
 					</div>
@@ -71,11 +82,8 @@
 
 			</div>
 		</main>
-
-		<?php
-
-		?>
-
-		<?php include './inc/footer.php'; ?>
+		<?php require_once './inc/footer.php'; ?>
 	</body>
 </html>
+
+<?php mysqli_close($conn); ?>
