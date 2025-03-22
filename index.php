@@ -16,28 +16,25 @@
 			<?php require_once './inc/sidebar.php'; ?>
 			<div class="main-content">
 				<h2 class="">All Task</h2>
-				<div>
+				<div class="tasks-container">
 					<?php
 						require_once './database.php';
-
 						$query = "SELECT * FROM tasks";
 						$stmt = mysqli_prepare($conn, $query);
 						mysqli_execute($stmt);
 						$result = mysqli_stmt_get_result($stmt);
-
-						if (mysqli_num_rows($result) > 0) {
-							while ($row = mysqli_fetch_assoc($result)) {
-								echo "<div class='card'>";
-								echo "<h3>" . $row["name"] . "</h3>";
-								echo "<p>" . $row["description"] . "</p>";
-								echo "<p>" . $row["due_date"] . "</p>";
-								echo "<p>" . $row["status"] . "</p>";
-								echo "</div>";
-							}
-						} else {
-							echo "No task found";
-						}
 					?>
+
+					<?php if (mysqli_num_rows($result) > 0): ?>
+						<?php while($row = mysqli_fetch_assoc($result)) { ?>
+							<div class="p-2 card">
+								<h4><?= $row["name"] ?></h4>
+								<p class="m-0"><?= $row["description"] ?></p>
+								<p>Due: <?= $row["due_date"] ?></p>
+								<p class="m-0"><?= $row["status"] === 0 ? "not done" : "done" ?></p>
+							</div>
+						<?php } ?>
+					<?php endif; ?>
 				</div>
 			</div>
 		</main>
